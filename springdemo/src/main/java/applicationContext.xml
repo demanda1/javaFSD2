@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<bean name="cricCoach" class="com.mycompany.springdemo.bean.CricketCoach">
+</bean>
+
+<bean name="theEmployee" class="com.mycompany.springdemo.bean.Employee">
+	<constructor-arg name="id" value="1"></constructor-arg>
+	<constructor-arg name="firstname" value="Ravi"></constructor-arg>
+	<constructor-arg name="lastname" value="Shastri"></constructor-arg>
+	<constructor-arg name="email" value="ravishastri@email.com"></constructor-arg>
+</bean>
+
+<bean name="fortune" class="com.mycompany.springdemo.bean.FortuneServiceImpl"></bean>
+
+<bean name="baseCoach" class="com.mycompany.springdemo.bean.BaseballCoach">
+	<constructor-arg name="fortune" ref="fortune"></constructor-arg>
+</bean>
+
+<context:property-placeholder location="classpath:sport.property"/>
+<bean name="ipl" class="com.mycompany.springdemo.bean.CricketCoach">
+	<property name="email" value="${myemail}"></property>
+	<property name="teamName" value="${myteam}"></property>
+</bean>
+</beans>
