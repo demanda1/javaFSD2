@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+<p class="h4 mb-4">My Menu</p>
+<table  class="table table-bordered table-striped" >
+		<thead class="thead-dark">
+			<tr>
+				<th>Id</th>
+				<th>Dish Name</th>
+				<th>View</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="dish : ${menu}">
+			
+				<td th:text="${dish.mId}" />	
+				<td th:text="${dish.mName}" />
+				<td><a th:href="@{/viewdetails/{r}/{i}/{n} (r=${dish.recipe.rId},i=${dish.ingredients.iId},n=${dish.notes.nId})}">View</a></td>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="Container">
+<p class="h4 mb-4">Ingredients</p>
+<table  class="table table-bordered table-striped" >
+
+			<tr th:each="i : ${ingredients}">
+			
+				<td >Price: </td>	
+				<td th:text="${i.iAmount}" />
+
+			</tr>
+			<tr th:each="i : ${ingredients}">
+			
+				<td >Requirements: </td>	
+				<td th:text="${i.iDescription}" />
+
+			</tr>		
+	</table>
+</div>
+<div class="Container">
+<p class="h4 mb-4">Recipe</p>
+<table  class="table table-bordered table-striped" >
+
+			<tr th:each="i : ${recipe}">
+			
+				<td >Description </td>	
+				<td  />
+
+			</tr>	
+	</table>
+</div>
+<div class="Container">
+<p class="h4 mb-4">Ingredients</p>
+<table  class="table table-bordered table-striped" >
+
+			<tr th:each="i : ${ingredients}">
+			
+				<td >Price: </td>	
+				<td th:text="${i.iAmount}" />
+
+			</tr>
+			<tr th:each="i : ${ingredients}">
+			
+				<td >Requirements: </td>	
+				<td th:text="${i.iDescription}" />
+
+			</tr>		
+	</table>
+</div>
+</body>
+</html>
