@@ -35,12 +35,12 @@ public class UserService {
 		return userdto;
 	}
 	
-	public UserDto findByEmail(UserDto userdto) {
+	public UserDto findByFirstnameAndPassword(UserDto userdto) {
 		ModelMapper mapper=new ModelMapper();
 		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		UserEntity user=mapper.map(userdto,UserEntity.class);
 		System.out.println(user.getEmail());
-		List<UserEntity> ulist=userRepository.findByEmail(user.getEmail());
+		List<UserEntity> ulist=userRepository.findByFirstnameAndPassword(user.getFirstname(), user.getPassword());
 		System.out.println("inside email service");
 		for(UserEntity s:ulist) {
 			System.out.println(s);

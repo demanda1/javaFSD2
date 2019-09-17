@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+<p class="h4 mb-4">Players List</p>
+<table  class="table table-bordered table-striped" >
+		<thead class="thead-dark">
+			<tr>
+				<th>Player Name</th>
+				<th>Player Age</th>
+				<th>Player Weight</th>
+				<th>Player Gender</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="p : ${player}">
+			
+				<td th:text="${p.name}" />	
+				<td th:text="${p.age}" />
+				<td th:text="${p.weight}"/>
+				<td th:text="${p.gender}"/>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+</body>
+</html>
