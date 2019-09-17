@@ -19,8 +19,7 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		auth.inMemoryAuthentication()
 		.withUser(users.username("deepak").password("test123").roles("EMPLOYEE"))
-		.withUser(users.username("subham").password("test123").roles("MANAGER"))
-		.withUser(users.username("john").password("test123").roles("ADMIN"));
+		.withUser(users.username("subham").password("test123").roles("EMPLOYEE","ADMIN"));
 		
 		
 	}
@@ -28,8 +27,17 @@ public class DemoSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// TODO Auto-generated method stub
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().loginPage("/showMyLoginPage")
-		.loginProcessingUrl("/authenticateTheUser").permitAll();
+		http.authorizeRequests()
+		.antMatchers("/").hasRole("EMPLOYEE")
+		.antMatchers("/view/**").hasRole("EMPLOYEE")
+		.antMatchers("/systems/**").hasRole("ADMIN")
+		.and()
+		.formLogin()
+			.loginPage("/showMyLoginPage")
+			.loginProcessingUrl("/authenticateTheUser")
+			.permitAll()
+		.and()
+		.logout().permitAll();
 	}
 	
 

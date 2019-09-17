@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+<body>
+<a href="/contract"></a>
+<div class="container">
+<p class="h4 mb-4">Employees</p>
+<table  class="table table-bordered table-striped" >
+		<thead class="thead-dark">
+			<tr>
+				<th>Id</th>
+				<th>First name</th>
+				<th>Last name</th>
+				<th>email</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="e : ${emp}">
+			
+				<td th:text="${e.Id}" />	
+				<td th:text="${e.firstname}" />
+				<td th:text="${e.lastname}" />
+				<td th:text="${e.email}" />
+				</tr>
+		</tbody>		
+	</table>
+</div>
+</body>
+</html>

@@ -13,7 +13,8 @@ public class Recipe {
 	@Column(name="rcookTime")
 	private String rCookTime;
 	@Column(name="rDescripton")
-	private String eDescription;
+	@Lob()
+	private String rDescription;
 	@Column(name="rDifficulty")
 	private String rDifficulty;
 	@Column(name="rDirections")
@@ -26,12 +27,12 @@ public class Recipe {
 	public Recipe() {
 		super();
 	}
-	public Recipe(String rPrepTime, String rCookTime, String eDescription, String rDifficulty, String rDirections,
+	public Recipe(String rPrepTime, String rCookTime, String rDescription, String rDifficulty, String rDirections,
 			String rServings, String rSource) {
 		super();
 		this.rPrepTime = rPrepTime;
 		this.rCookTime = rCookTime;
-		this.eDescription = eDescription;
+		this.rDescription = rDescription;
 		this.rDifficulty = rDifficulty;
 		this.rDirections = rDirections;
 		this.rServings = rServings;
@@ -56,10 +57,10 @@ public class Recipe {
 		this.rCookTime = rCookTime;
 	}
 	public String geteDescription() {
-		return eDescription;
+		return rDescription;
 	}
-	public void seteDescription(String eDescription) {
-		this.eDescription = eDescription;
+	public void seteDescription(String rDescription) {
+		this.rDescription = rDescription;
 	}
 	public String getrDifficulty() {
 		return rDifficulty;
@@ -87,8 +88,8 @@ public class Recipe {
 	}
 	@Override
 	public String toString() {
-		return "Recipe [rId=" + rId + ", rPrepTime=" + rPrepTime + ", rCookTime=" + rCookTime + ", eDescription="
-				+ eDescription + ", rDifficulty=" + rDifficulty + ", rDirections=" + rDirections + ", rServings="
+		return "Recipe [rId=" + rId + ", rPrepTime=" + rPrepTime + ", rCookTime=" + rCookTime + ", rDescription="
+				+ rDescription + ", rDifficulty=" + rDifficulty + ", rDirections=" + rDirections + ", rServings="
 				+ rServings + ", rSource=" + rSource + "]";
 	}
 	

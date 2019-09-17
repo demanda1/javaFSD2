@@ -1,0 +1,10 @@
+server:
+  port: 8888
+  application:
+    name: config-server
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/dnilay/java_fsd_2

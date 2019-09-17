@@ -11,7 +11,7 @@ public class Ingredients {
 	@Column(name="iAmount")
 	private String iAmount;
 	@Column(name="iDescription")
-	@Lob
+	@Lob()
 	private String iDescription;
 	@Column(name="iRecipeId")
 	private String iRecipeId;
