@@ -5,13 +5,13 @@ public class PlayerDto {
 	private String pName;
 	private String pSports;
 	private int pAge;
-	private float pWeight;
+	private int pWeight;
 	private String pGender;
 	
 	public PlayerDto() {
 		super();
 	}
-	public PlayerDto(String pName, String pSports, int pAge, float pWeight, String pGender) {
+	public PlayerDto(String pName, String pSports, int pAge, int pWeight, String pGender) {
 		super();
 		this.pName = pName;
 		this.pSports = pSports;
@@ -37,10 +37,10 @@ public class PlayerDto {
 	public void setpAge(int pAge) {
 		this.pAge = pAge;
 	}
-	public float getpWeight() {
+	public int getpWeight() {
 		return pWeight;
 	}
-	public void setpWeight(float pWeight) {
+	public void setpWeight(int pWeight) {
 		this.pWeight = pWeight;
 	}
 	public String getpGender() {
