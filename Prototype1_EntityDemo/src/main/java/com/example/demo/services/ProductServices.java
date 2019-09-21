@@ -35,27 +35,46 @@ public class ProductServices {
 		return null;
 	}
 	
-	public void createProduct(Product p,String sellerid,String category) {
+	public List<Product> showProductByCity(String city){
+		List<City> cityobj=cityrepo.findByCity(city);
+		for(City c:cityobj) {
+			return c.getProductlist();
+		}
+		return null;
+	}
+	public void createProduct(Product p,String sellerid,String category, String city) {
 		
 		List<Renter> renterList=renterrepo.findBySellerid(sellerid);
 		List<Category> categoryList=categoryrepo.findByCategory(category);
+		List<City> cityList=cityrepo.findByCity(city);
 		for(Renter r:renterList) {
 			p.setRenter(r);
 			List<Product> prodlist=r.getProductlist();
 			prodlist.add(p);
 			r.setProductlist(prodlist);
+			System.out.println(r.getSellername());
+			
 		   }
 			for(Category c:categoryList) {
 				p.setCategory(c);
 				List<Product> prodlist=c.getProductlist();
 				prodlist.add(p);
 				c.setProductlist(prodlist);
+				System.out.println(c.getCategory());
+			}
+			for(City c:cityList) {
+				p.setCity(c);
+				List<Product> prodlist=c.getProductlist();
+				prodlist.add(p);
+				c.setProductlist(prodlist);
+				System.out.println(c.getCity());
+				
 			}
 			productrepo.save(p);
 	}
 	
 	@Transactional
-	public void deleteProduct(String pid, String sid) {
+	public void deleteProduct(String pid) {
 		
 		 productrepo.deleteByProductid(pid);
 		
@@ -67,5 +86,10 @@ public class ProductServices {
 		for(Product pro:p) {
 			pro.setProductname(name);
 		}
+	}
+	
+	@Transactional
+	public void deleteRenter(String sid) {
+		renterrepo.deleteBySellerid(sid);
 	}
 }

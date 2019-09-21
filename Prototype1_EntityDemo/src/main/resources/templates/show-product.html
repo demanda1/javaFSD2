@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+<p class="h4 mb-4">My Product list</p>
+<table  class="table table-bordered table-striped" >
+		<thead class="thead-dark">
+			<tr>
+				<th>Product name</th>
+				<th>Product price</th>
+				<th>Quantity</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="p : ${productlist}">
+			
+				<td th:text="${p.productname}" />	
+				<td th:text="${p.productprice}" />
+				<td th:text="${p.productquantity}"/>
+			</tr>
+		</tbody>		
+	</table>
+</div>
+</body>
+</html>

@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,8 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="product")
@@ -23,12 +20,22 @@ public class Product {
 	private int productprice;
 	private int productquantity;
 	@ManyToOne
-	@JoinColumn(name="renter")
+	@JoinColumn(name="renterid")
 	private Renter renter;
 	@ManyToOne
 	@JoinColumn(name="categoryid")
 	private Category category;
+	@ManyToOne
+	@JoinColumn(name="cityid")
+	private City city;
 	
+	
+	public City getCity() {
+		return city;
+	}
+	public void setCity(City city) {
+		this.city = city;
+	}
 	public Renter getRenter() {
 		return renter;
 	}

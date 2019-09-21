@@ -20,35 +20,25 @@ import com.example.demo.repo.RenterRepository;
 @Component
 public class RenterToProduct implements ApplicationListener<ContextRefreshedEvent> {
 	
-	private ProductRepository productrepo;
-	private RenterRepository renterrepo;
-	private CategoryRepository categoryrepo;
-	private CityRepository cityrepo;
-	public RenterToProduct(ProductRepository productrepo, RenterRepository renterrepo, CategoryRepository categoryrepo, CityRepository cityrepo) {
-		super();
-		this.productrepo = productrepo;
-		this.renterrepo = renterrepo;
-		this.categoryrepo=categoryrepo;
-		this.cityrepo=cityrepo;
-	}
-
+//	private ProductRepository productrepo;
+//	private RenterRepository renterrepo;
+//	private CategoryRepository categoryrepo;
+//	private CityRepository cityrepo;
+//	public RenterToProduct(ProductRepository productrepo, RenterRepository renterrepo, CategoryRepository categoryrepo, CityRepository cityrepo) {
+//		super();
+//		this.productrepo = productrepo;
+//		this.renterrepo = renterrepo;
+//		this.categoryrepo=categoryrepo;
+//		this.cityrepo=cityrepo;
+//	}
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		// TODO Auto-generated method stub
-		init();
+//		// TODO Auto-generated method stub
+//		init();
 	}
-	
-	private void init() {
-	        
-		Renter r1=new Renter("abc","Deepak Mandal");
-		renterrepo.save(r1);
-		
-		Category c1=new Category("automobiles");
-		Category c2=new Category("furniture");
-		Category c3=new Category("electronics");
-		categoryrepo.save(c1);
-		categoryrepo.save(c2);
-		categoryrepo.save(c3);
-	}
+//	
+//	private void init() {
+//	        
+//	}
 
 }

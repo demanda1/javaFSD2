@@ -22,7 +22,8 @@ public class City {
 	private int id;
 	private String cityid;
 	private String city;
-	
+	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
+	private List<Product> productlist;
 
 	public City(String cityid, String city) {
 		super();
@@ -52,6 +53,16 @@ public class City {
 	public void setCity(String city) {
 		this.city = city;
 	}
+
+	public List<Product> getProductlist() {
+		return productlist;
+	}
+
+	public void setProductlist(List<Product> productlist) {
+		this.productlist = productlist;
+	}
+	
+	
 	
 
 	

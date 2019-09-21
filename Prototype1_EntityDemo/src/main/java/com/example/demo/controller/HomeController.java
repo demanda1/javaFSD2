@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.Product;
@@ -19,6 +20,19 @@ import com.google.gson.GsonBuilder;
 public class HomeController {
 
 	@Autowired ProductServices productServices;
+	
+	@RequestMapping("/")
+	public String selectCity() {
+		return "select-city";
+	}
+	
+	@RequestMapping("/showallproduct")
+	public String showProductByCity(@RequestParam("city") String city,Model theModel){
+		List<Product> productlist=productServices.showProductByCity(city);
+		theModel.addAttribute("productlist",productlist);
+		return "show-product";
+	}
+	
 	@RequestMapping("/showproduct/{category}")
 	public String showProduct(@PathVariable String category, Model theModel){
 		List<Product> productlist=productServices.showProduct(category);
@@ -29,20 +43,25 @@ public class HomeController {
 		return productlist.toString();
 	}
 	
-	@RequestMapping("/createproduct/{id}/{category}")
-	public void createProduct(@PathVariable String id,@PathVariable String category, @RequestBody Product p) {
-		productServices.createProduct(p, id, category);
+	@RequestMapping("/createproduct/{id}/{category}/{city}")
+	public void createProduct(@PathVariable String id,@PathVariable String category,@PathVariable String city, @RequestBody Product p) {
+		productServices.createProduct(p, id, category, city);
 		
 	}
 	
-	@RequestMapping("/deleteproduct/{pid}/{sid}")
-	public void deleteProduct(@PathVariable String pid, @PathVariable String sid) {
-		productServices.deleteProduct(pid,sid);
+	@RequestMapping("/deleteproduct/{pid}")
+	public void deleteProduct(@PathVariable String pid) {
+		productServices.deleteProduct(pid);
 	}
 	
 	@RequestMapping("/updateproduct/{name}/{pid}")
 	public void updateProduct(@PathVariable String name, @PathVariable String pid) {
 		productServices.updateProduct(name,pid);
+	}
+	
+	@RequestMapping("/deleterenter/{sid}")
+	public void deleteRenter(@PathVariable String sid) {
+		productServices.deleteRenter(sid);
 	}
 	
 }

@@ -17,15 +17,24 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	private String categoryid;
 	private String category;
 	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
 	private List<Product> productlist;
 	public Category() {
 		super();
 	}
-	public Category(String category) {
+	
+	public Category(String category, String categoryid) {
 		super();
 		this.category = category;
+		this.categoryid=categoryid;
+	}
+	public String getCategoryid() {
+		return categoryid;
+	}
+	public void setCategoryid(String categoryid) {
+		this.categoryid = categoryid;
 	}
 	public String getCategory() {
 		return category;
