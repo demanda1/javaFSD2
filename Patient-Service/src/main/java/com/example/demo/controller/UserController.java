@@ -15,6 +15,7 @@ import com.example.demo.entity.Doctor;
 import com.example.demo.entity.Patient;
 import com.example.demo.repo.DoctorClient;
 import com.example.demo.service.UserService;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
 public class UserController {

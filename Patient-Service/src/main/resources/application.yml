@@ -11,6 +11,6 @@ spring:
     username: root
     password: root
 server:
-  port: 8050      # Fix the sentence server to 8020.  This makes it easy to find.
+  port: 5656      # Fix the sentence server to 8020.  This makes it easy to find.
 
   

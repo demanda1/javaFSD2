@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Doctor;
 import com.example.demo.repo.DoctorRepository;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @Service
 public class UserService {
    @Autowired
 	private DoctorRepository doctorRepository;
-
-	
+  
+   
 	public List<Doctor> findBySpeciality(String speciality) {
 		List<Doctor> docList=doctorRepository.findBySpeciality(speciality);
 		return docList;
