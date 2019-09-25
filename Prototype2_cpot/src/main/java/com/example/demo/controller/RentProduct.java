@@ -13,6 +13,7 @@ import com.example.demo.services.ProductService;
 public class RentProduct {
 	@Autowired ProductRepository productrepo;
 	@Autowired ProductService productservice;
+	
 	@RequestMapping("/mycart/{pid}/{cid}")
 	public void addToCart(@PathVariable String pid,@PathVariable String cid) {
 		String status=productservice.addToCart(pid, cid);
