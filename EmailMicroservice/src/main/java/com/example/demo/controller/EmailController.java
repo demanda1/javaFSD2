@@ -26,7 +26,7 @@ public class EmailController {
 		Map<String, Object> model = new HashMap<>();
 		model=service.settingModel(request);
 		Object result = service.sendEmail(request, model);
-		return ResponseEntity.ok("done");
+		return ResponseEntity.ok(result);
 		
 	}
 	

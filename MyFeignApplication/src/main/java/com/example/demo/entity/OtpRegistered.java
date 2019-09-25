@@ -12,18 +12,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Data
+
 @NoArgsConstructor
 @Setter
 @Getter
 public class OtpRegistered {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Email
-	@Column(nullable = false, unique = true)
 	private String to;
 	private String otp;
 	private long timeStamp;

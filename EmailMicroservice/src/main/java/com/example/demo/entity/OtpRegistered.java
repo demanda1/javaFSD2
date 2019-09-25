@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
 import lombok.Data;
@@ -17,15 +18,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@Table(name="otptable")
 public class OtpRegistered {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Email
-	@Column(nullable = false, unique = true)
+	@Column(name="receiver",nullable = false, unique = true)
 	private String to;
 	private String otp;
+	@Column(name="timestamp")
 	private long timeStamp;
 	
 	public OtpRegistered(@Email String to, String otp, long timeStamp) {
