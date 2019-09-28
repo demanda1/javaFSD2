@@ -29,9 +29,10 @@ public class RenterController {
 		return productlist;
 	}
 	
-	@RequestMapping("/showproduct/{category}")
-	public List<Product> showProduct(@PathVariable String category){
-		List<Product> productlist=renterService.showProduct(category);
+	@RequestMapping("/showproduct")
+	public List<Product> showProduct(@RequestParam("category") String category, @RequestParam("city") String city){
+		System.out.println("reached in show product!!");
+		List<Product> productlist=renterService.showProduct(category,city);
 		//theModel.addAttribute("productlist",productlist);
 		for(Product p:productlist) {
 			System.out.println(p.toString());

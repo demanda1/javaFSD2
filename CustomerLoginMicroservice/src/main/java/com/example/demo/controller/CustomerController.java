@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,13 +21,14 @@ public class CustomerController {
 	
 	
 	@PostMapping("/register")
-	public String createCustomer(@RequestBody Customer c){
-		
+	public List<String> createCustomer(@RequestBody Customer c){
+		List<String> cid=new ArrayList<>();
 		String status=customerService.createCustomer(c);
 		if(status==null) {
-			return "User Registration FAILED!!";
+			cid.add("userexist");
 		}
-		return "User Successfully Registered";
+		cid.add(status);
+		return cid;
 	}
 	
 	@PostMapping("/login")

@@ -26,7 +26,7 @@ public class CustomerService {
 				c.setCustomerid(generateRandomString());
 				c.setCustomerpassword(bCryptPasswordEncoder.encode(c.getCustomerpassword()));
 				customerrepo.save(c);
-				return "user added successfully";
+				return c.getCustomerid().toString();
 			}
 			System.out.println("user already exist.!");
 			return null;

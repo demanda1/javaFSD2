@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,9 +45,10 @@ public class HomeController {
 		return productlist;
 	}
 	
-	@RequestMapping("/showproduct/{category}")
-	public List<Product> showProduct(@PathVariable String category, Model theModel){
-		List<Product> productlist=renterService.showProduct(category);
+	@RequestMapping("/showproduct") 
+	public List<Product> showProduct(@RequestParam("category") String category, @RequestParam("city") String city, Model theModel){
+		System.out.println("inside feign of renter");
+		List<Product> productlist=renterService.showProduct(category,city);
 		//theModel.addAttribute("productlist",productlist);
 		for(Product p:productlist) {
 			System.out.println(p.getProductname());
@@ -97,10 +100,10 @@ public class HomeController {
 	}
 	
 	@PostMapping("/register")
-	public String createCustomer(@RequestBody Customer c){
-		
-		String status=customerLoginService.createCustomer(c);
-		return status;
+	public List<String> createCustomer(@RequestBody Customer c){
+		List<String> cid=new ArrayList<>();
+		cid=customerLoginService.createCustomer(c);
+		return cid;
 	}
 	
 	@PostMapping("/login")
@@ -117,7 +120,7 @@ public class HomeController {
 	@PostMapping("/sendotp")
 	public ResponseEntity<?> sendEmail(@RequestBody MailRequest request) {
 		Object result = service.sendEmail(request);
-		return ResponseEntity.ok("done");
+		return ResponseEntity.ok(result);
 		
 	}
 	

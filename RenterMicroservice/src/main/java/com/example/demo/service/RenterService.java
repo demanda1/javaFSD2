@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -22,16 +23,24 @@ public class RenterService {
 	@Autowired ProductRepository productrepo;
 	@Autowired RenterRepository renterrepo;
 	@Autowired CategoryRepository categoryrepo;
-	public List<Product> showProduct(String category){
-		List<Category> catobj=categoryrepo.findByCategory(category);
-		for(Category c:catobj) {
-			return c.getProductlist();
+	
+	public List<Product> showProduct(String category,String city){
+		System.out.println(category+city);
+		List<Product> productobj=productrepo.findByCategoryAndCity(categoryrepo.findByCategory(category),cityrepo.findByCity(city));
+		List<Product> prodlist=new ArrayList<>();
+		for(Product p:productobj) {
+			System.out.println(p);
+			prodlist.add(p);
 		}
-		return null;
+		return prodlist;
 	}
 	
 	public List<Product> showProductByCity(String city){
 		List<City> cityobj=cityrepo.findByCity(city);
+		List<Product> plist=productrepo.findByProductid("p2");
+		for(Product p:plist) {
+			System.out.println(p.getCategory());
+		}
 		for(City c:cityobj) {
 			return c.getProductlist();
 		}

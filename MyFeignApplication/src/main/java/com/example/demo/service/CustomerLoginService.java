@@ -15,7 +15,7 @@ public interface CustomerLoginService {
 	
 	@LoadBalanced
 	@PostMapping("/register")
-	public String createCustomer(@RequestBody Customer c);
+	public List<String> createCustomer(@RequestBody Customer c);
 	
 	@LoadBalanced
 	@PostMapping("/login")

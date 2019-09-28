@@ -12,4 +12,5 @@ import com.example.demo.entity.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> findByProductid(String pid);
 	void deleteByProductid(String pid);
+	List<Product> findByCategoryAndCity(Object category, Object city);
 }

@@ -26,9 +26,7 @@ public class Product {
 	private int productprice;
 	private int productquantity;
 	private boolean productavailability;
-	@Lob
-	@Column(columnDefinition="mediumblob")
-	private byte[] productimage;
+	private String productimage;
 
 	@ManyToOne
 	@JoinColumn(name="renterid")
@@ -41,7 +39,7 @@ public class Product {
 	private City city;
 	public Product(String productid, String productname, String productcategory, String productsubcategory,
 			String productdescription, int productprice, int productquantity, boolean productavailability,
-			byte[] productimage) {
+			String productimage) {
 		super();
 		this.productid = productid;
 		this.productname = productname;
@@ -110,10 +108,10 @@ public class Product {
 	public void setProductavailability(boolean productavailability) {
 		this.productavailability = productavailability;
 	}
-	public byte[] getProductimage() {
+	public String getProductimage() {
 		return productimage;
 	}
-	public void setProductimage(byte[] productimage) {
+	public void setProductimage(String productimage) {
 		this.productimage = productimage;
 	}
 	@JsonIgnore
