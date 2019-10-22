@@ -20,6 +20,10 @@ public interface RenterService {
 	@RequestMapping(value="/showallproduct",  method=RequestMethod.GET)
 	public List<Product> showProductByCity(@RequestParam("city") String city,Model theModel);
 	
+	@RequestMapping(value="/showproductbyid",  method=RequestMethod.GET)
+	public List<Product> showProductByid(@RequestParam("pid") String pid,Model theModel);
+	
+	
 	@RequestMapping(value="/showproduct",  method=RequestMethod.GET)
 	public List<Product> showProduct(@RequestParam String category, @RequestParam String city);
 	

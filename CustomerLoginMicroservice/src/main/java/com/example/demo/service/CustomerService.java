@@ -47,6 +47,11 @@ public class CustomerService {
 		       }
 				return null;
 			 }
+		
+	 public List<Customer> findbycid(String cid){
+		 List<Customer> custlist=customerrepo.findByCustomerid(cid);
+		 return custlist;
+	 }
 	
 	
 	public static String generateRandomString() {
@@ -67,5 +72,22 @@ public class CustomerService {
         return sb.toString();
     }
 
+	public List<Customer> findbyemail(String email){
+		List<Customer> cuslist=customerrepo.findByCustomeremail(email);
+		for(Customer c:cuslist) {
+			return cuslist;
+		}
+		return null;
+	}
+	
+	public void changepassword(String email, String password) {
+		List<Customer> cuslist=customerrepo.findByCustomeremail(email);
+		for(Customer c:cuslist) {
+			System.out.println(c.getCustomerpassword());
+			c.setCustomerpassword(bCryptPasswordEncoder.encode(password));
+			customerrepo.save(c);
+			System.out.println("password changed successfuly");
+		}
+	}
 	
 }

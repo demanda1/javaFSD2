@@ -14,15 +14,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dto.InvoiceRequest;
 import com.example.demo.dto.MailRequest;
+import com.example.demo.dto.ResetPasswordRequest;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.LoginModel;
+import com.example.demo.entity.MyCart;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.PaymentDetail;
 import com.example.demo.service.CustomerLoginService;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.EmailService;
+import com.example.demo.service.PaymentService;
 import com.example.demo.service.RenterService;
 
 @RestController
@@ -30,6 +36,8 @@ public class HomeController {
 	@Autowired CustomerService customerService;
 	@Autowired CustomerLoginService customerLoginService;
 	@Autowired RenterService renterService;
+	@Autowired EmailService emailservice;
+	@Autowired PaymentService paymentservice;
 	@RequestMapping("/")
 	public String selectCity() {
 		return "select-city";
@@ -38,6 +46,16 @@ public class HomeController {
 	@RequestMapping("/showallproduct")
 	public List<Product> showProductByCity(@RequestParam("city") String city,Model theModel){
 		List<Product> productlist=renterService.showProductByCity(city, theModel);
+		for(Product p:productlist) {
+			System.out.println(p.getProductname());
+		}
+//		theModel.addAttribute("productlist",productlist);
+		return productlist;
+	}
+	
+	@RequestMapping("/showproductbyid")
+	public List<Product> showProductByid(@RequestParam("pid") String pid,Model theModel){
+		List<Product> productlist=renterService.showProductByid(pid,theModel);
 		for(Product p:productlist) {
 			System.out.println(p.getProductname());
 		}
@@ -78,18 +96,20 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/mycart/{pid}/{cid}")
-	public void addToCart(@PathVariable String pid,@PathVariable String cid) {
-		String status=customerService.addToCart(pid, cid);
+	public List<String> addToCart(@PathVariable String pid,@PathVariable String cid) {
+		List<String> status=customerService.addToCart(pid, cid);
 		System.out.println(status);
+		return status;
 	}
 	
 	@RequestMapping("/savecart/{cid}/{pid}/{quantity}")
-	public void saveCart(@PathVariable String cid,@PathVariable String pid, @PathVariable String quantity) {
-		String status=customerService.saveCart(cid, pid, quantity);
-		System.out.println(status);
+	public List<String> saveCart(@PathVariable String cid,@PathVariable String pid, @PathVariable String quantity) {
+		List<String> s= new ArrayList<>();
+		s=customerService.saveCart(cid, pid, quantity);
+		return s;
 	}
-	@RequestMapping("/checkout/{status}/{cid}")
-	public String orderProduct(@PathVariable String cid, @PathVariable String status) {
+	@RequestMapping("/checkout")
+	public List<String> orderProduct(@RequestParam String cid, @RequestParam String status) {
 		if(status.equals("success")) {
 			return customerService.orderProduct(cid, status);
 		}
@@ -107,8 +127,8 @@ public class HomeController {
 	}
 	
 	@PostMapping("/login")
-	public String loginCustomer(@RequestBody LoginModel request){
-		String status = customerLoginService.loginCustomer(request);
+	public List<String> loginCustomer(@RequestBody LoginModel request){
+		List<String> status = customerLoginService.loginCustomer(request);
 		return status;
 	}
 	
@@ -126,9 +146,71 @@ public class HomeController {
 	
 	
 	@PostMapping("/otpverified")
-	public ResponseEntity<?> resendotp(@RequestBody MailRequest request) {
-		Object resp=service.resendotp(request);
-		return ResponseEntity.ok(resp);
+	public List<String> resendotp(@RequestBody MailRequest request) {
+		return  service.resendotp(request);
 	}
+	
+	@RequestMapping("/findcustomer")
+	public List<Customer> findbycid(@RequestParam("cid") String cid) {
+		List<Customer> customer=customerLoginService.findbycid(cid);
+		return customer;
+	}
+	
+	@RequestMapping("/viewcart")
+	public List<Product> viewCart(@RequestParam("cid") String cid) {
+		List<Product> productlist=customerService.viewCart(cid);
+		return productlist;
+	}
+	
+	@RequestMapping("/seecart")
+	public List<MyCart> seeCart(@RequestParam("cid") String cid) {
+		List<MyCart> cartlist=customerService.seeCart(cid);
+		return cartlist;
+	}
+	
+	@RequestMapping("/deleteitem")
+	public void deleteProduct(@RequestParam("pid") String pid, @RequestParam("cid") String cid) {
+		customerService.deleteProduct(pid, cid);
+	}
+	
+	@RequestMapping("/findbyemail")
+	public List<Customer> findbyemail(@RequestParam("email") String email){
+		List<Customer> customer=customerLoginService.findbyemail(email);
+		return customer;
+	}
+	
+	@RequestMapping("/setidproof")
+	public void setidproof(@RequestParam("idnum") String idnum, @RequestParam("cid") String cid) {
+		customerService.setidproof(idnum, cid);
+	}
+	
+	@RequestMapping("/walletpayment")
+	public List<String> walletpayment(@RequestParam("cid") String cid, @RequestParam("amount") String amount){
+		return (customerService.walletpayment(cid, amount));
+	}
+	
+	@PostMapping("/resetpassword")
+	public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request){
+		return emailservice.resetPassword(request);
+		
+	}
+	
+	@RequestMapping("/changepassword")
+	public void changepassword(@RequestParam("email") String email, @RequestParam("pass") String pass) {
+		customerLoginService.changepassword(email, pass);
+	}
+	
+	@PostMapping("/sendinvoice")
+	public ResponseEntity<?> sendInvoice(@RequestBody InvoiceRequest request){
+		return emailservice.sendInvoice(request);
+		 
+	}
+	
+	 @PostMapping(path = "/payment-details")
+	    public @ResponseBody PaymentDetail proceedPayment(@RequestBody PaymentDetail paymentDetail){
+	        return paymentservice.proceedPayment(paymentDetail);
+	    }
+	
+	
 	
 }

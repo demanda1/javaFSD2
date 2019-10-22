@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.demo.dto.InvoiceRequest;
 import com.example.demo.dto.MailRequest;
 import com.example.demo.dto.OtpResponse;
+import com.example.demo.dto.ResetPasswordRequest;
 import com.example.demo.service.EmailService;
 
 @RestController
@@ -32,8 +36,29 @@ public class EmailController {
 	
 	
 	@PostMapping("/otpverified")
-	public ResponseEntity<?> resendotp(@RequestBody MailRequest request) {
-		Object resp=service.deleteVerifiedOtp(request.getTo());
-		return ResponseEntity.ok(resp);
+	public List<String> resendotp(@RequestBody MailRequest request) {
+		String resp=service.deleteVerifiedOtp(request.getTo());
+		List<String> response=new ArrayList<>();
+		response.add(resp);
+		return response;
 	}
+	
+	@PostMapping("/resetpassword")
+	public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request){
+		Map<String, Object> model = new HashMap<>();
+		model=service.settingModel(request);
+        Object result = service.sendEmailToResetpassword(request, model);		
+		return ResponseEntity.ok(result);
+		
+		
+	}
+	
+	@PostMapping("/sendinvoice")
+	public ResponseEntity<?> sendInvoice(@RequestBody InvoiceRequest request){
+		Map<String,Object> model=new HashMap<>();
+		model=service.settingModel2(request);
+		Object result=service.sendEmailInvoice(request, model);
+		return ResponseEntity.ok(result);
+	}
+	
 }

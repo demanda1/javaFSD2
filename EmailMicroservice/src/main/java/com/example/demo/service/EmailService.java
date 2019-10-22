@@ -19,9 +19,11 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import com.example.demo.dto.InvoiceRequest;
 import com.example.demo.dto.MailRequest;
 import com.example.demo.dto.MailResponse;
 import com.example.demo.dto.OtpResponse;
+import com.example.demo.dto.ResetPasswordRequest;
 import com.example.demo.entity.OtpRegistered;
 import com.example.demo.repository.OtpRepository;
 
@@ -39,6 +41,80 @@ public class EmailService {
 	@Autowired Configuration config;
 	
 	@Autowired OtpRepository otpRepo;
+	
+	public Object sendEmailToResetpassword(ResetPasswordRequest request, Map<String, Object> model ) {
+		MailResponse response = new MailResponse();
+		OtpResponse otpResponse = new OtpResponse();
+		MimeMessage message = sender.createMimeMessage();
+		try {
+			// set mediaType
+			MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+					StandardCharsets.UTF_8.name());
+			// add attachment
+//			helper.addAttachment("invoice.pdf", new ClassPathResource("invoice.pdf"));
+
+			Template t = config.getTemplate("pss-reset-template.ftl");
+			String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+
+			helper.setTo(request.getTo());
+			helper.setText(html, true);
+			helper.setSubject(request.getSubject());
+			
+			sender.send(message);
+			
+			ModelMapper mapper = new ModelMapper();
+			mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+			otpResponse= mapper.map(regOtp, OtpResponse.class);
+			
+			return otpResponse;
+
+		} catch (MessagingException | IOException | TemplateException e) {
+			response.setMessage("Mail Sending failure : "+e.getMessage());
+			response.setStatus(Boolean.FALSE);
+			return response;
+		}
+
+		
+
+	}
+	
+	public Object sendEmailInvoice(InvoiceRequest request, Map<String, Object> model ) {
+		MailResponse response = new MailResponse();
+		OtpResponse otpResponse = new OtpResponse();
+		MimeMessage message = sender.createMimeMessage();
+		try {
+			// set mediaType
+			MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+					StandardCharsets.UTF_8.name());
+			// add attachment
+//			helper.addAttachment("invoice.pdf", new ClassPathResource("invoice.pdf"));
+
+			Template t = config.getTemplate("invoice.ftl");
+			String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+
+			helper.setTo(request.getTo());
+			helper.setText(html, true);
+			helper.setSubject(request.getSubject());
+			
+			sender.send(message);
+			
+			ModelMapper mapper = new ModelMapper();
+			mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+			otpResponse= mapper.map(regOtp, OtpResponse.class);
+			
+			System.out.println("Email Invoice Send Successfully!!!!!");
+			
+			return otpResponse;
+
+		} catch (MessagingException | IOException | TemplateException e) {
+			response.setMessage("Mail Sending failure : "+e.getMessage());
+			response.setStatus(Boolean.FALSE);
+			return response;
+		}
+
+		
+
+	}
 	
 	public Object sendEmail(MailRequest request, Map<String, Object> model) {
 		
@@ -77,7 +153,7 @@ public class EmailService {
 	}
 	
 	//incase user is verified, we have to delete the otp and timestamp record related to that particular email
-    public Object deleteVerifiedOtp(String email) {
+    public String deleteVerifiedOtp(String email) {
     	otpRepo.deleteByTo(email);
 		return "deleted..!";
     	
@@ -98,7 +174,7 @@ public class EmailService {
 	    } 
 	    return otp; 
 	  } 
-	
+	 
 	
 	//setting model for my freeMaker Template
 	public  Map<String, Object> settingModel(MailRequest request) {
@@ -134,6 +210,47 @@ public class EmailService {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return timestamp.getTime();
 	}
+	
+	//setting model for my freeMaker Template
+		public  Map<String, Object> settingModel(ResetPasswordRequest request) {
+			
+			Map<String, Object> model = new HashMap<>();
+			
+			model.put("fName", request.getName());
+			
+			
+			ModelMapper mapper = new ModelMapper();
+			mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+			regOtp = mapper.map(request, OtpRegistered.class);
+			
+			//checking if we have already sent the OTP mail to the user or not  
+			if(otpRepo.findByTo(regOtp.getTo())!=null) {
+			otpRepo.deleteByTo(regOtp.getTo());//if exist then delete that record and send the new OTP mail to the user
+			}
+			
+			regOtp.setOtp(new String(EmailService.generatorOTP()));
+			regOtp.setTimeStamp(settingTimeStamp());
+			otpRepo.save(regOtp);
+			
+			model.put("OTP", regOtp.getOtp());
+			model.put("location", "Bangalore,India");
+			return model;
+			
+		}
+		
+		
+		//setting model for my freeMaker Template
+		public  Map<String, Object> settingModel2(InvoiceRequest request) {
+			
+			Map<String, Object> model = new HashMap<>();
+			
+			model.put("name", request.getName());
+			
+			model.put("tablerows",request.getBody());
+			model.put("location", "Bangalore,India");
+			return model;
+			
+		}
 
 	
 

@@ -12,11 +12,15 @@ public class MyCart {
 	private String customerid;
 	private String productid;
 	private int quantity;
-	public MyCart(String customerid, String productid, int quantity) {
+	private int period;
+	private String idproof;
+	public MyCart(String customerid, String productid, int quantity, int period, String idproof) {
 		super();
 		this.customerid = customerid;
 		this.productid = productid;
 		this.quantity=quantity;
+		this.period=period;
+		this.idproof=idproof;
 	}
 	public int getQuantity() {
 		return quantity;
@@ -45,6 +49,19 @@ public class MyCart {
 	public void setProductid(String productid) {
 		this.productid = productid;
 	}
+	public int getPeriod() {
+		return period;
+	}
+	public void setPeriod(int period) {
+		this.period = period;
+	}
+	public String getIdproof() {
+		return idproof;
+	}
+	public void setIdproof(String idproof) {
+		this.idproof = idproof;
+	}
+	
 	
 	
 }

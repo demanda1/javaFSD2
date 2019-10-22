@@ -40,6 +40,17 @@ public class RenterController {
 		return productlist;
 	}
 	
+	@RequestMapping("/showproductbyid")
+	public List<Product> showProductByid(@RequestParam("pid") String pid,Model theModel){
+		List<Product> productlist=renterService.showProductByid(pid);
+	//	theModel.addAttribute("productlist",productlist);
+		for(Product p:productlist) {
+			System.out.println(p.getProductname());
+		}
+		return productlist;
+	}
+	
+	
 	@RequestMapping("/createproduct/{renterid}/{category}/{city}")
 	public void createProduct(@PathVariable String renterid,@PathVariable String category,@PathVariable String city, @RequestBody Product p) {
 		renterService.createProduct(p, renterid, category, city);

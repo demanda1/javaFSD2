@@ -46,6 +46,15 @@ public class RenterService {
 		}
 		return null;
 	}
+	
+	public List<Product> showProductByid(String pid){
+		List<Product> plist=productrepo.findByProductid(pid);
+		for(Product p:plist) {
+			System.out.println(p.getProductname());
+		}
+		return plist;
+	}
+	
 	public void createProduct(Product p,String renterid,String category, String city) {
 		
 		List<Renter> renterList=renterrepo.findByRenterid(renterid);

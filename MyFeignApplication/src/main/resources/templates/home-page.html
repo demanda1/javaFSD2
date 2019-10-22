@@ -93,20 +93,20 @@
 <table  class="table table-bordered table-striped" >
 		<thead class="thead-dark">
 			<tr>
+				<th></th>
 				<th>Product name</th>
 				<th>Product price</th>
 				<th>Quantity</th>
-				<th></th>
+				
 			</tr>
 		</thead>
 		
 		<tbody>
 			<tr th:each="p : ${productlist}">
-			
+
 				<td th:text="${p.productname}" />	
 				<td th:text="${p.productprice}" />
 				<td th:text="${p.productquantity}"/>
-				<th><button class="btn btn-success">Add to cart</button></th>
 			</tr>
 		</tbody>		
 	</table>
